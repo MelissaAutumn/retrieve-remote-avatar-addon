@@ -1,0 +1,33 @@
+{
+  "manifest_version": 2,
+  "version": "1.0",
+  "author": "Arnd Issler",
+  "name": "Message Display Script Example",
+  "description": "An extension example how to use a message display script",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "messageDisplayScript@mv2.sample.extensions.thunderbird.net"
+    }
+  },
+  "background": {
+    "scripts": [
+      "src/background.js"
+    ]
+  },
+  "permissions": [
+    "messagesUpdate",
+    "messagesModify",
+    "messagesRead",
+    "menus"
+  ],
+  "experiment_apis": {
+    "com_melissaautumn_msgHdr": {
+      "schema": "schema.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "paths": [["com_melissaautumn_msgHdr"]],
+        "script": "src/com_melissaautumn_msgHdr/api.js"
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+[
+  {
+    "namespace": "com_melissaautumn_msgHdr",
+    "functions": [
+      {
+        "name": "setRemoteAvatar",
+        "type": "function",
+        "description": "Attempts to retrieve and sets the avatar in the message header.",
+        "async": true,
+        "parameters": [
+          {
+            "name": "email",
+            "type": "string",
+            "description": "The message's authour email address."
+          }
+        ]
+      }
+    ]
+  }
+]
