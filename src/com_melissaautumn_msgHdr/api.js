@@ -49,8 +49,33 @@ const getGravatarURL = async ( window, email )  => {
   // Create a SHA256 hash of the final string
   const hash = await sha256( window, address );
 
-  // Grab the actual image URL
-  return `https://gravatar.com/avatar/${ hash }`;
+  const url =  `https://gravatar.com/avatar/${ hash }?d=404`;
+
+  const response = await window.fetch(url);
+  if (!response.ok) {
+    return null;
+  }
+  const blob = await response.blob();
+  return window.URL.createObjectURL(blob);
+}
+
+const getLibravatarURL = async ( window, email )  => {
+  // Trim leading and trailing whitespace from
+  // an email address and force all characters
+  // to lower case
+  const address = String( email ).trim().toLowerCase();
+
+  // Create a SHA256 hash of the final string
+  const hash = await sha256( window, address );
+
+  const url =  `https://seccdn.libravatar.org/avatar/${ hash }?d=404`;
+
+  const response = await window.fetch(url);
+  if (!response.ok) {
+    return null;
+  }
+  const blob = await response.blob();
+  return window.URL.createObjectURL(blob);
 }
 
 var com_melissaautumn_msgHdr = class extends ExtensionCommon.ExtensionAPI {
@@ -58,12 +83,33 @@ var com_melissaautumn_msgHdr = class extends ExtensionCommon.ExtensionAPI {
     return {
       com_melissaautumn_msgHdr: {
         async setRemoteAvatar (email) {
+          console.log(context.extension);
           const doc = Services.wm.getMostRecentWindow('mail:3pane').document
-          const win = Services.wm.getMostRecentWindow('mail:3pane').window;
+          //const win = Services.wm.getMostRecentWindow('mail:3pane').window;
+
+          // ...the mail body allows remote images (if you allow it)
+          // FIXME: Do remote requests in background.js or somewhere that allows remote fetches
+          const win = doc.getElementById('mail3PaneTabBrowser1').browsingContext.window
 
           const avatar = getAvatarElement(doc);
           // if returned null we failed, or they already have an avatar set.
           if (!avatar) {
+            return;
+          }
+
+          // Sometimes email contains "my name <my@email.com>", so process that...
+          const emailIdx = email.indexOf('<');
+          const processedEmail = emailIdx > -1 ? email.substring(emailIdx+1, email.length-1) : email;
+
+          // TODO: Cache the result for a period of time
+
+          // Retrieve libravatar, and if that fails try gravatar
+          let url = await getLibravatarURL(win, processedEmail);
+          if (!url) {
+            url = await getGravatarURL(win, processedEmail);
+          }
+          // If neither works then return
+          if (!url) {
             return;
           }
 
@@ -72,8 +118,7 @@ var com_melissaautumn_msgHdr = class extends ExtensionCommon.ExtensionAPI {
 
           // Create the avatar image element
           const avatarImg = doc.createElement('img')
-          // FIXME: This causes a CSP error but for some reason Thunderbird still loads it?
-          avatarImg.src = await getGravatarURL(win, email);
+          avatarImg.src = url;
 
           avatar.appendChild(avatarImg);
         },

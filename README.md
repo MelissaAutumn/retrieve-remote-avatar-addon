@@ -6,4 +6,5 @@ Note: This addon is really just a proof of concept.
 
 ## Sources
 
+* Libravatar
 * Gravatar
