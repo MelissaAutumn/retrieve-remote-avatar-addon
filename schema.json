@@ -9,9 +9,9 @@
         "async": true,
         "parameters": [
           {
-            "name": "email",
+            "name": "url",
             "type": "string",
-            "description": "The message's authour email address."
+            "description": "The URL of the avatar you want to display."
           }
         ]
       }
