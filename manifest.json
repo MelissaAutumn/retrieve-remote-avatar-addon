@@ -1,12 +1,12 @@
 {
   "manifest_version": 2,
   "version": "1.0",
-  "author": "Arnd Issler",
-  "name": "Message Display Script Example",
+  "author": "Melissa Autumn",
+  "name": "Retrieve Remote Avatar",
   "description": "An extension example how to use a message display script",
   "browser_specific_settings": {
     "gecko": {
-      "id": "messageDisplayScript@mv2.sample.extensions.thunderbird.net"
+      "id": "retrieveRemoteAvatar@com.melissaautumn"
     }
   },
   "background": {
