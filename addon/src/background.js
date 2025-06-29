@@ -1,6 +1,4 @@
-const GRAVATAR_URL = 'https://gravatar.com/avatar/$hash?d=404';
-const LIBRAVATAR_URL = 'https://seccdn.libravatar.org/avatar/$hash?d=404';
-const CACHED_NOT_FOUND = '[not found]';
+import { CACHED_NOT_FOUND, GRAVATAR_URL, LIBRAVATAR_URL } from './defines.js';
 
 /**
  * Compute sha256 hash from a given input string

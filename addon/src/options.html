@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Retrieve Remote Avatar - Options</title>
+    <style>
+        .provider-list {
+            width: 100%;
+            display: flex;
+            gap: 1rem;
+            min-height: 20rem;
+
+            .list {
+                display: flex;
+                flex-direction: column;
+                width: 50%;
+            }
+
+            .controls {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                width: 20%;
+
+                hr {
+                    width: 100%;
+                }
+            }
+        }
+        #newProviderDialog {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+
+            .newProviderField {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            #newProviderExample {
+                font-family: monospace;
+            }
+        }
+    </style>
+</head>
+<body>
+<section>
+    <h1>Providers</h1>
+    <div class="provider-list">
+        <div class="list">
+            <label for="activeProviders">Active Providers</label>
+            <select id="activeProviders" multiple>
+                <option></option>
+            </select>
+            <small>
+                This addon will attempt to retrieve a png image from each provider starting with the top of the list and
+                working its way down.
+            </small>
+        </div>
+        <div class="controls">
+            <button id="providerMoveUp">Move Up</button>
+            <button id="providerMoveDown">Move Down</button>
+            <hr/>
+            <button id="providerAdd">Add provider</button>
+            <button id="providerRemove">Remove provider</button>
+            <button id="providerRestoreDefaults">Restore default providers</button>
+        </div>
+    </div>
+</section>
+<section>
+    <h1>Cache</h1>
+    <p>Avatars will be stored in local storage for a period of <span id="cacheExpiryPeriod"></span> days.</p>
+    <p><b><span id="cacheStatsTotal"></span> images</b> in cache.</p>
+    <!--<p><b><span id="cacheStatsSize"></span> bytes</b> in cache.</p>-->
+    <button id="cacheClear">Clear Cache</button>
+</section>
+<dialog id="newProviderDialog" closedby="any">
+    <h1>Add new provider</h1>
+    <div class="newProviderField">
+        <label for="newProviderName">Name</label>
+        <input type="text" id="newProviderName"/>
+    </div>
+    <div class="newProviderField">
+        <label for="newProviderUrl">URL</label>
+        <input type="text" id="newProviderUrl"/>
+        <small>You can use the values <b>$hash</b> and <b>$domain</b> to insert a sha256'd email or domain respectively.</small>
+    </div>
+    <div class="newProviderField">
+        <p>An example of what a request to this provider may look like: <br/><span id="newProviderExample"></span></p>
+    </div>
+    <div class="newProviderField">
+        <button>Add</button>
+        <button>Cancel</button>
+    </div>
+</dialog>
+<script src="./options.js" type="module"></script>
+</body>
+</html>

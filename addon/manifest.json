@@ -12,20 +12,31 @@
   "background": {
     "scripts": [
       "src/background.js"
-    ]
+    ],
+    "type": "module"
+  },
+  "options_ui": {
+    "page": "src/options.html"
   },
   "permissions": [
     "messagesUpdate",
     "messagesModify",
     "messagesRead",
-    "storage"
+    "storage",
+    "sensitiveDataUpload"
   ],
   "experiment_apis": {
     "com_melissaautumn_msgHdr": {
       "schema": "schema.json",
       "parent": {
-        "scopes": ["addon_parent"],
-        "paths": [["com_melissaautumn_msgHdr"]],
+        "scopes": [
+          "addon_parent"
+        ],
+        "paths": [
+          [
+            "com_melissaautumn_msgHdr"
+          ]
+        ],
         "script": "src/com_melissaautumn_msgHdr/api.js"
       }
     }
