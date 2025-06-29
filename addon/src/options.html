@@ -26,7 +26,7 @@
                 }
             }
         }
-        #newProviderDialog {
+        .dialogInners {
             display: flex;
             flex-direction: column;
             gap: 1rem;
@@ -48,7 +48,7 @@
     <div class="provider-list">
         <div class="list">
             <label for="activeProviders">Active Providers</label>
-            <select id="activeProviders" multiple>
+            <select id="activeProviders" size="6">
                 <option></option>
             </select>
             <small>
@@ -73,7 +73,8 @@
     <!--<p><b><span id="cacheStatsSize"></span> bytes</b> in cache.</p>-->
     <button id="cacheClear">Clear Cache</button>
 </section>
-<dialog id="newProviderDialog" closedby="any">
+<dialog id="newProviderDialog">
+    <div class="dialogInners">
     <h1>Add new provider</h1>
     <div class="newProviderField">
         <label for="newProviderName">Name</label>
@@ -88,8 +89,9 @@
         <p>An example of what a request to this provider may look like: <br/><span id="newProviderExample"></span></p>
     </div>
     <div class="newProviderField">
-        <button>Add</button>
-        <button>Cancel</button>
+        <button id="newProviderAdd">Add</button>
+        <button id="newProviderCancel">Cancel</button>
+    </div>
     </div>
 </dialog>
 <script src="./options.js" type="module"></script>

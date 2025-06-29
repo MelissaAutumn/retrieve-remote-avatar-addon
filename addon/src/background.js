@@ -1,4 +1,5 @@
 import { CACHED_NOT_FOUND, GRAVATAR_URL, LIBRAVATAR_URL } from './defines.js';
+import { getProviders } from './providers.js';
 
 /**
  * Compute sha256 hash from a given input string
@@ -24,9 +25,19 @@ const hashEmail = async (email) => {
   return await sha256(address);
 };
 
+const emailDomain = async (email) => {
+  // Sometimes email contains "my name <my@email.com>", so process that...
+  const emailIdx = email.indexOf('<');
+  const processedEmail = emailIdx > -1 ? email.substring(emailIdx + 1, email.length - 1) : email;
+  const address = String(processedEmail).trim().toLowerCase();
+  return address.slice(address.indexOf('@')+1);
+};
+
+
 const getRemoteURL = async (email, rootUrl) => {
   const hashedEmail = await hashEmail(email);
-  const url = rootUrl.replace('$hash', hashedEmail);
+  const domain = await emailDomain(email);
+  const url = rootUrl.replace('$hash', hashedEmail).replace('$domain', domain);
   const response = await window.fetch(url);
   if (!response.ok) {
     return null;
@@ -75,7 +86,16 @@ const getAvatarURL = async (email) => {
     console.warn('Error retrieving cached avatar', e);
   }
 
-  const url = await getRemoteURL(email, LIBRAVATAR_URL) ?? await getRemoteURL(email, GRAVATAR_URL);
+  let url = null;
+  const activeProviders = await getProviders();
+  console.log("Prov", activeProviders);
+  for (const activeProvider of activeProviders) {
+    url = await getRemoteURL(email, activeProvider.url);
+    if (url) {
+      break;
+    }
+  }
+
   try {
     await setCache(email, url === null ? CACHED_NOT_FOUND : url, url === null ? 1 : 3);
   } catch (e) {
@@ -125,4 +145,5 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 messenger.messageDisplayScripts.register({
   js: [{ file: '/src/on_message_display.js' }],
 });
+console.log("message display scripts!");
 
