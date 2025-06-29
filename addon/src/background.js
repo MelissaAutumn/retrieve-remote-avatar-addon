@@ -1,9 +1,11 @@
+/**
+ * The main script, this retrieves the remote url, hashes emails, and get/sets img cache.
+ * This should be split up into various js files, but it works for now!
+ */
 import {
   CACHE_EXPIRY_FOUND,
   CACHE_EXPIRY_NOT_FOUND,
   CACHED_NOT_FOUND,
-  GRAVATAR_URL,
-  LIBRAVATAR_URL
 } from './defines.js';
 import { getProviders } from './providers.js';
 
@@ -115,7 +117,7 @@ const getAvatarURL = async (email) => {
 };
 
 /**
- * command handler: handles the commands received from the content script
+ * Retrieve the tabid, retrieve the remote avatar and pass it to our exp api to place it in the message header.
  */
 const doHandleCommand = async (message, sender) => {
   const {
@@ -131,14 +133,7 @@ const doHandleCommand = async (message, sender) => {
 };
 
 /**
- * Add a handler for communication with other parts of the extension,
- * like our messageDisplayScript.
- *
- * 👉 There should be only one handler in the background script
- *    for all incoming messages
- *
- * 👉 Handle the received message by filtering for a distinct property and select
- *    the appropriate handler
+ * Handle incoming event (there's only one) from on_message_display
  */
 browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message && message.hasOwnProperty('command')) {
@@ -155,5 +150,4 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 messenger.messageDisplayScripts.register({
   js: [{ file: '/src/on_message_display.js' }],
 });
-console.log("message display scripts!");
 

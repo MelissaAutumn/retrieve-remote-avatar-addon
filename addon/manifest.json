@@ -3,7 +3,7 @@
   "version": "1.0",
   "author": "Melissa Autumn",
   "name": "Retrieve Remote Avatar",
-  "description": "An extension example how to use a message display script",
+  "description": "This experimental addon for Thunderbird fetches a remote avatar from various sources if one isn't already set.",
   "browser_specific_settings": {
     "gecko": {
       "id": "retrieveRemoteAvatar@com.melissaautumn"

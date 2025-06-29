@@ -22,4 +22,4 @@ export const resetProviders = async () => {
 export const saveProviders = async (providers) => {
   await browser.storage.local.remove(ACTIVE_PROVIDERS_KEY);
   await browser.storage.local.set({ [ACTIVE_PROVIDERS_KEY]: providers });
-}
+};

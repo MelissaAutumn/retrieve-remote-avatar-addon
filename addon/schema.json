@@ -5,7 +5,7 @@
       {
         "name": "setRemoteAvatar",
         "type": "function",
-        "description": "Attempts to retrieve and sets the avatar in the message header.",
+        "description": "Attempts to sets the avatar in the message header.",
         "async": true,
         "parameters": [
           {
