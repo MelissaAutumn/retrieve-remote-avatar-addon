@@ -6,7 +6,9 @@
   "description": "This experimental addon for Thunderbird fetches a remote avatar from various sources if one isn't already set.",
   "browser_specific_settings": {
     "gecko": {
-      "id": "retrieveRemoteAvatar@com.melissaautumn"
+      "id": "retrieveRemoteAvatar@com.melissaautumn",
+      "strict_min_version": "139.0",
+      "strict_max_version": "141.*"
     }
   },
   "background": {
