@@ -5,3 +5,4 @@ const onMessageDisplay = async () => {
 };
 
 onMessageDisplay();
+console.log("on message display!");
