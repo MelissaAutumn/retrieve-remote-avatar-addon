@@ -1,4 +1,10 @@
-import { CACHED_NOT_FOUND, GRAVATAR_URL, LIBRAVATAR_URL } from './defines.js';
+import {
+  CACHE_EXPIRY_FOUND,
+  CACHE_EXPIRY_NOT_FOUND,
+  CACHED_NOT_FOUND,
+  GRAVATAR_URL,
+  LIBRAVATAR_URL
+} from './defines.js';
 import { getProviders } from './providers.js';
 
 /**
@@ -58,7 +64,7 @@ const getCache = async (email) => {
   }
   const { expiresAt, data } = item[key];
 
-  if (expiresAt <= Date.now()) {
+  if (expiresAt > -1 && expiresAt <= Date.now()) {
     await browser.storage.local.remove(key);
     return null;
   }
@@ -67,10 +73,13 @@ const getCache = async (email) => {
 
 const setCache = async (email, dataURL, expiresAtDays = 3) => {
   const key = `imgv1_${await hashEmail(email)}`;
+
   const expiresAt = new Date(Date.now());
   expiresAt.setDate(expiresAt.getDate() + expiresAtDays);
+  const timestamp = expiresAtDays > -1 ? expiresAt.getTime() : -1;
+
   const item = {
-    expiresAt: expiresAt.getTime(),
+    expiresAt: timestamp,
     data: dataURL
   };
   await browser.storage.local.set({ [key]: item });
@@ -87,17 +96,18 @@ const getAvatarURL = async (email) => {
   }
 
   let url = null;
+  let ttl = null;
   const activeProviders = await getProviders();
-  console.log("Prov", activeProviders);
   for (const activeProvider of activeProviders) {
     url = await getRemoteURL(email, activeProvider.url);
     if (url) {
+      ttl = activeProvider.ttl ?? CACHE_EXPIRY_FOUND;
       break;
     }
   }
 
   try {
-    await setCache(email, url === null ? CACHED_NOT_FOUND : url, url === null ? 1 : 3);
+    await setCache(email, url === null ? CACHED_NOT_FOUND : url, url === null ? CACHE_EXPIRY_NOT_FOUND : ttl);
   } catch (e) {
     console.warn('Error setting cached avatar', e);
   }

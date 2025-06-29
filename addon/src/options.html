@@ -3,6 +3,10 @@
 <head>
     <title>Retrieve Remote Avatar - Options</title>
     <style>
+        body {
+            min-height: 30rem;
+            padding: 1rem;
+        }
         .provider-list {
             width: 100%;
             display: flex;
@@ -68,7 +72,7 @@
 </section>
 <section>
     <h1>Cache</h1>
-    <p>Avatars will be stored in local storage for a period of <span id="cacheExpiryPeriod"></span> days.</p>
+    <p>Avatars will be stored in local storage for a period of <span id="cacheExpiryPeriod"></span> days, unless a provider specifies a different expiry time.</p>
     <p><b><span id="cacheStatsTotal"></span> images</b> in cache.</p>
     <!--<p><b><span id="cacheStatsSize"></span> bytes</b> in cache.</p>-->
     <button id="cacheClear">Clear Cache</button>
@@ -87,6 +91,11 @@
     </div>
     <div class="newProviderField">
         <p>An example of what a request to this provider may look like: <br/><span id="newProviderExample"></span></p>
+    </div>
+    <div class="newProviderField">
+        <label for="newProviderCache">Expiry Time</label>
+        <input type="number" id="newProviderCache"/>
+        <small>The time in days to fetch a new avatar for an email or domain. A value of <b>-1</b> means no expiry.</small>
     </div>
     <div class="newProviderField">
         <button id="newProviderAdd">Add</button>
