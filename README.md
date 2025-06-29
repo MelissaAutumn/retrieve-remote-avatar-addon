@@ -1,5 +1,7 @@
 # Retrieve Remote Avatar for Thunderbird
 
+<img src="./logo.png" width="64" title="The logo consisting of a cloud emoji with sunglasses."/>
+
 ![A screenshot of the Thunderbird message header showing an avatar for Porkbun Support despite that email not being saved as a contact.](docs/screenshots/readme-porkbun.png)
 
 This experimental addon for Thunderbird fetches a remote avatar from various sources (listed below) if one isn't already  set.
