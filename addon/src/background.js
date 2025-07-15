@@ -25,19 +25,19 @@ const sha256 = async (input) => {
   return hash;
 };
 
-const hashEmail = async (email) => {
+const normalizeEmail = (email) => {
   // Sometimes email contains "my name <my@email.com>", so process that...
   const emailIdx = email.indexOf('<');
   const processedEmail = emailIdx > -1 ? email.substring(emailIdx + 1, email.length - 1) : email;
-  const address = String(processedEmail).trim().toLowerCase();
-  return await sha256(address);
+  return String(processedEmail).trim().toLowerCase();
+}
+
+const hashEmail = async (email) => {
+  return await sha256(normalizeEmail(email));
 };
 
 const emailDomain = async (email) => {
-  // Sometimes email contains "my name <my@email.com>", so process that...
-  const emailIdx = email.indexOf('<');
-  const processedEmail = emailIdx > -1 ? email.substring(emailIdx + 1, email.length - 1) : email;
-  const address = String(processedEmail).trim().toLowerCase();
+  const address = normalizeEmail(email);
   return address.slice(address.indexOf('@')+1);
 };
 
