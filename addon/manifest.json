@@ -1,6 +1,6 @@
 {
   "manifest_version": 2,
-  "version": "1.2",
+  "version": "1.3",
   "author": "Melissa Autumn",
   "name": "Retrieve Remote Avatar",
   "description": "This experimental addon for Thunderbird fetches a remote avatar from various sources if one isn't already set.",

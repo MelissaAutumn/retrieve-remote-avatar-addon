@@ -137,7 +137,7 @@ const doHandleCommand = async (message, sender) => {
     return;
   }
 
-  await browser.com_melissaautumn_msgHdr.setRemoteAvatar(tabId, messageHeader.author, url);
+  await browser.com_melissaautumn_msgHdr.setRemoteAvatar(tabId, url);
 };
 
 /**
