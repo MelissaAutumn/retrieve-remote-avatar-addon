@@ -51,11 +51,12 @@ const getRemoteURL = async (email, rootUrl) => {
     return null;
   }
 
+  const mediaType = response.headers.get('content-type') ?? 'image/png';
   const blob = await response.blob();
   // .bytes is available in firefox, so should be okay here.
   const bytes = await blob.bytes();
   const base64String = btoa(String.fromCharCode(...bytes));
-  return `data:image/png;base64,${base64String}`;
+  return `data:${mediaType};base64,${base64String}`;
 };
 
 const getCache = async (email) => {
